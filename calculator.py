@@ -1,18 +1,18 @@
 from tkinter import *
 
-top = Tk()
-top.title('Calculator')
-top.resizable(False, False)
-top.configure(bg='#222831')
+CalcWindow = Tk()
+CalcWindow.title('Calculator')
+CalcWindow.resizable(False, False)
+CalcWindow.configure(bg='#222831')
 
-displayframe = Frame(top, borderwidth=5, relief=SUNKEN)
+displayframe = Frame(CalcWindow, borderwidth=5, relief=SUNKEN)
 displayframe.pack(fil='x', pady=10, padx=10)
 displayframe.configure(bg='#222831')
 
 entry = Entry(displayframe, borderwidth=10, relief=FLAT, font='10', bg='#77abb7', fg='black')
 entry.pack(fill='x')
 
-buttonframe = Frame(top)
+buttonframe = Frame(CalcWindow)
 buttonframe.pack(fill='x', padx=30, pady=30)
 buttonframe.configure(bg='#222831')
 
@@ -58,4 +58,4 @@ buttondel.grid(row=4, column=1, padx=5, pady=5)
 buttonlb.grid(row=4, column=2, padx=5, pady=5)
 buttonrb.grid(row=4, column=3, padx=5, pady=5)
 
-top.mainloop()
+CalcWindow.mainloop()
