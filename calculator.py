@@ -1,4 +1,4 @@
-from tkinter import *
+from tkinter import Tk, Frame, Button, SUNKEN, END, FLAT, StringVar, Entry
 
 
 class Calc:
@@ -103,8 +103,7 @@ class Calc:
             self.entry.insert(0, 'Syntax Error')
 
     def backspace(self):
-            self.entry.delete(len(self.entry_text.get())-1, END)
-
+        self.entry.delete(len(self.entry_text.get()) - 1, END)
 
 
 def main():
