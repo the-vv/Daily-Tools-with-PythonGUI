@@ -12,7 +12,10 @@ class Calc:
         self.displayframe.pack(fil='x', pady=10, padx=10)
         self.displayframe.configure(bg='#222831')
 
-        self.entry = Entry(self.displayframe, borderwidth=10, relief=FLAT, font='10', bg='#77abb7', fg='black')
+        self.entry_text = StringVar()
+        self.entry = Entry(self.displayframe, borderwidth=10, relief=FLAT, font='10', bg='#77abb7', fg='black',
+                           textvariable=self.entry_text)
+        self.entry.focus()
         self.entry.pack(fill='x')
 
         self.buttonframe = Frame(self.CalcWindow)
@@ -20,63 +23,45 @@ class Calc:
         self.buttonframe.configure(bg='#222831')
 
         self.button8 = Button(self.buttonframe, text='8', width=5, height=2, bg='#000272', font='5', fg='white',
-                              activebackground='green',
-                              command=lambda: self.addchar(8))
+                              activebackground='green', command=lambda: self.addchar(8))
         self.button9 = Button(self.buttonframe, text='9', width=5, height=2, bg='#000272', font='5', fg='white',
                               activebackground='green', command=lambda: self.addchar(9))
         self.button7 = Button(self.buttonframe, text='7', width=5, height=2, bg='#000272', font='5', fg='white',
-                              activebackground='green',
-                              command=lambda: self.addchar(7))
+                              activebackground='green', command=lambda: self.addchar(7))
         self.button4 = Button(self.buttonframe, text='4', width=5, height=2, bg='#000272', font='5', fg='white',
-                              activebackground='green',
-                              command=lambda: self.addchar(4))
+                              activebackground='green', command=lambda: self.addchar(4))
         self.button5 = Button(self.buttonframe, text='5', width=5, height=2, bg='#000272', font='5', fg='white',
-                              activebackground='green',
-                              command=lambda: self.addchar(5))
+                              activebackground='green', command=lambda: self.addchar(5))
         self.button6 = Button(self.buttonframe, text='6', width=5, height=2, bg='#000272', font='5', fg='white',
-                              activebackground='green',
-                              command=lambda: self.addchar(6))
+                              activebackground='green', command=lambda: self.addchar(6))
         self.button1 = Button(self.buttonframe, text='1', width=5, height=2, bg='#000272', font='5', fg='white',
-                              activebackground='green',
-                              command=lambda: self.addchar(1))
+                              activebackground='green', command=lambda: self.addchar(1))
         self.button2 = Button(self.buttonframe, text='2', width=5, height=2, bg='#000272', font='5', fg='white',
-                              activebackground='green',
-                              command=lambda: self.addchar(2))
+                              activebackground='green', command=lambda: self.addchar(2))
         self.button3 = Button(self.buttonframe, text='3', width=5, height=2, bg='#000272', font='5', fg='white',
-                              activebackground='green',
-                              command=lambda: self.addchar(3))
+                              activebackground='green', command=lambda: self.addchar(3))
         self.buttondot = Button(self.buttonframe, text='.', width=5, height=2, bg='blue', font='5', fg='white',
-                                activebackground='green',
-                                command=lambda: self.addchar('.'))
+                                activebackground='green', command=lambda: self.addchar('.'))
         self.button0 = Button(self.buttonframe, text='0', width=5, height=2, bg='#000272', font='5', fg='white',
-                              activebackground='green',
-                              command=lambda: self.addchar(0))
+                              activebackground='green', command=lambda: self.addchar(0))
         self.buttondiv = Button(self.buttonframe, text='/', width=5, height=2, bg='blue', font='5', fg='white',
-                                activebackground='green',
-                                command=lambda: self.addchar('/'))
+                                activebackground='green', command=lambda: self.addchar('/'))
         self.buttonmul = Button(self.buttonframe, text='*', width=5, height=2, bg='blue', font='5', fg='white',
-                                activebackground='green',
-                                command=lambda: self.addchar('*'))
+                                activebackground='green', command=lambda: self.addchar('*'))
         self.buttonmin = Button(self.buttonframe, text='-', width=5, height=2, bg='blue', font='5', fg='white',
-                                activebackground='green',
-                                command=lambda: self.addchar('-'))
+                                activebackground='green', command=lambda: self.addchar('-'))
         self.buttonadd = Button(self.buttonframe, text='+', width=5, height=2, bg='blue', font='5', fg='white',
-                                activebackground='green',
-                                command=lambda: self.addchar('+'))
+                                activebackground='green', command=lambda: self.addchar('+'))
         self.buttonback = Button(self.buttonframe, text='C', width=5, height=2, bg='blue', font='5', fg='white',
-                                 activebackground='green',
-                                 command=lambda: self.addchar(8))
+                                 activebackground='green', command=lambda: self.backspace())
         self.buttoneql = Button(self.buttonframe, text='=', width=5, height=2, bg='blue', font='5', fg='white',
-                                activebackground='green',
-                                command=lambda: self.addchar(8))
+                                activebackground='green', command=lambda: self.sum())
         self.buttondel = Button(self.buttonframe, text='CLR', width=5, height=2, bg='blue', font='5', fg='white',
                                 activebackground='green', command=lambda: self.clear())
         self.buttonlb = Button(self.buttonframe, text='(', width=5, height=2, bg='blue', font='5', fg='white',
-                               activebackground='green',
-                               command=lambda: self.addchar(8))
+                               activebackground='green', command=lambda: self.addchar('('))
         self.buttonrb = Button(self.buttonframe, text=')', width=5, height=2, bg='blue', font='5', fg='white',
-                               activebackground='green',
-                               command=lambda: self.addchar(8))
+                               activebackground='green', command=lambda: self.addchar(')'))
 
         self.button7.grid(row=0, column=0, padx=5, pady=5)
         self.button8.grid(row=0, column=1, padx=5, pady=5)
@@ -108,9 +93,21 @@ class Calc:
     def execute(self):
         self.CalcWindow.mainloop()
 
+    def sum(self):
+        try:
+            var = eval(str(self.entry_text.get()))
+            self.clear()
+            self.addchar(var)
+        except:
+            self.entry.delete(0, END)
+            self.entry.insert(0, 'Syntax Error')
+
+    def backspace(self):
+            self.entry.delete(len(self.entry_text.get())-1, END)
+
+
 
 def main():
-    print(eval('5+9-2'))
     calculator = Calc()
     calculator.execute()
 
